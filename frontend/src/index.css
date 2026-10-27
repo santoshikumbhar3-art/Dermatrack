@@ -1,0 +1,89 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ivory: #F8F6F0;
+  --color-porcelain: #FFFDF9;
+  --color-forest: #243D32;
+  --color-forest-soft: #34503F;
+  --color-sage: #A8B7A0;
+  --color-sage-pale: #E4E9DF;
+  --color-rose: #D9A5A0;
+  --color-rose-pale: #F4E4E1;
+  --color-charcoal: #262823;
+  --color-grey: #79796F;
+  --color-line: #E8E4DB;
+  --color-ochre: #9A6A1E;
+  --color-ochre-pale: #F5EAD3;
+  --color-alarm: #9B2C23;
+  --color-alarm-pale: #F6DEDA;
+
+  --font-serif: "Newsreader", "Iowan Old Style", Georgia, serif;
+  --font-sans: "Hanken Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  --radius-panel: 6px;
+}
+
+@layer base {
+  html { color-scheme: light; -webkit-text-size-adjust: 100%; }
+  body {
+    background: var(--color-ivory);
+    color: var(--color-charcoal);
+    font-family: var(--font-sans);
+    font-size: 15px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  h1, h2, h3 { font-family: var(--font-serif); font-weight: 400; letter-spacing: -0.01em; line-height: 1.12; }
+  :focus-visible { outline: 2px solid var(--color-forest); outline-offset: 2px; border-radius: 3px; }
+  ::selection { background: var(--color-rose-pale); }
+  input, select, textarea, button { font: inherit; color: inherit; }
+}
+
+@layer components {
+  .panel { background: var(--color-porcelain); border: 1px solid var(--color-line); border-radius: var(--radius-panel); }
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+    min-height: 2.5rem; padding: .5rem 1.05rem; border-radius: 999px; font-weight: 500; font-size: .925rem;
+    transition: background-color .15s, color .15s, border-color .15s; cursor: pointer; white-space: nowrap;
+  }
+  .btn:disabled { opacity: .45; cursor: not-allowed; }
+  .btn-primary { background: var(--color-forest); color: var(--color-ivory); }
+  .btn-primary:hover:not(:disabled) { background: var(--color-forest-soft); }
+  .btn-ghost { border: 1px solid var(--color-line); background: var(--color-porcelain); }
+  .btn-ghost:hover:not(:disabled) { border-color: var(--color-sage); }
+  .btn-quiet { padding-inline: .6rem; color: var(--color-forest); }
+  .btn-quiet:hover:not(:disabled) { background: var(--color-sage-pale); }
+  .btn-danger { border: 1px solid var(--color-alarm-pale); color: var(--color-alarm); background: var(--color-porcelain); }
+  .btn-danger:hover:not(:disabled) { background: var(--color-alarm-pale); }
+
+  .field { display: grid; gap: .35rem; }
+  .field > span { font-size: .85rem; font-weight: 500; }
+  .field .hint { font-size: .8rem; color: var(--color-grey); font-weight: 400; }
+  .input {
+    width: 100%; min-height: 2.5rem; padding: .5rem .75rem; background: var(--color-porcelain);
+    border: 1px solid var(--color-line); border-radius: 4px;
+  }
+  .input:focus { outline: none; border-color: var(--color-forest); box-shadow: 0 0 0 3px rgb(36 61 50 / .12); }
+  .input[aria-invalid="true"] { border-color: var(--color-alarm); }
+  .chip { display: inline-flex; align-items: center; gap: .3rem; padding: .15rem .6rem; border-radius: 999px; font-size: .78rem; border: 1px solid var(--color-line); background: var(--color-porcelain); }
+  .meta { font-family: var(--font-mono); font-size: .74rem; color: var(--color-grey); letter-spacing: -0.01em; }
+  .prose-tight p + p { margin-top: .6rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; scroll-behavior: auto !important; }
+}
+
+@keyframes page-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+.page-in { animation: page-in .35s ease-out both; }
+
+@keyframes draw { from { stroke-dashoffset: var(--len, 1400); } to { stroke-dashoffset: 0; } }
+.contour-draw path { stroke-dasharray: var(--len, 1400); animation: draw 2.2s cubic-bezier(.4,0,.2,1) both; }
+
+@keyframes pulse-ring { 0% { transform: scale(.9); opacity: .7 } 100% { transform: scale(1.5); opacity: 0 } }
+.pulse-ring { animation: pulse-ring 1.8s ease-out infinite; transform-origin: center; }
+
+@keyframes scan-sweep { 0% { transform: translateY(-10%); } 100% { transform: translateY(110%); } }
+.scan-sweep { animation: scan-sweep 2.4s ease-in-out infinite alternate; }
